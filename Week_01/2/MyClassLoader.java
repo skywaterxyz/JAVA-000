@@ -11,7 +11,10 @@ public class MyClassLoader extends ClassLoader {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 		MyClassLoader myClassLoader = new MyClassLoader();
 		Class<?> helloClass = myClassLoader.findClass("Hello", "./Hello.xlass");
-		
+		if (helloClass == null) {
+			System.out.print("find class fail.");
+			return;
+		}
 		Object helloInstance  = helloClass.newInstance();
 		
 		Method method = helloClass.getMethod("hello");
