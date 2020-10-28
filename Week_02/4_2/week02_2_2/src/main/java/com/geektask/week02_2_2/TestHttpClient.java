@@ -3,7 +3,6 @@ package com.geektask.week02_2_2;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -17,48 +16,23 @@ import org.apache.http.util.EntityUtils;
  */
 public class TestHttpClient {
 	
-    public static void main( String[] args ) {
-    	CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet("http://localhost:8801");
-		CloseableHttpResponse response = null;
-		
-		
-		try {
-			response = httpClient.execute(httpGet);
+	private static final String CHARSET = "UTF-8";
+	
+    public static void main(String[] args) {
+    	
+		HttpGet httpGet = new HttpGet("http://localhost:8801");		
+		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+				CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			
+			System.out.println("状态:" + response.getStatusLine());
 			HttpEntity responseEntity = response.getEntity();
-			System.out.println("响应状态为:" + response.getStatusLine());
+			
 			if (responseEntity != null) {
-				System.out.println("响应内容长度为:" + responseEntity.getContentLength());
-				System.out.println("响应内容为:" + EntityUtils.toString(responseEntity));
+				System.out.println("内容:" + EntityUtils.toString(responseEntity, CHARSET));
 			}
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			if (httpClient != null) {
-				try {
-					httpClient.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (response != null) {
-				try {
-					response.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
+		}		
     }
 }
