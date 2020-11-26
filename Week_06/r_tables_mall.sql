@@ -49,6 +49,7 @@ CREATE TABLE if not exists `product` (
   `price` int(10) DEFAULT NULL COMMENT '商品价格，单位：分',
   `description` varchar(64) DEFAULT NULL COMMENT '商品描述',
   `seller_id` int(10) NOT NULL COMMENT '商户id',  
+  `inventory` int(10) NOT NULL COMMENT '库存量',  
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
